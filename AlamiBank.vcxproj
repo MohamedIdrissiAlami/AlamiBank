@@ -129,6 +129,14 @@
   <ItemGroup>
     <ClCompile Include="maincpp.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="clsDate.h" />
+    <ClInclude Include="clsInputValidate.h" />
+    <ClInclude Include="clsMainMenuScreen.h" />
+    <ClInclude Include="clsScreen.h" />
+    <ClInclude Include="clsString.h" />
+    <ClInclude Include="clsUtil.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
