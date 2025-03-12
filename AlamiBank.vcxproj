@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="clsAddNewClientScreen.h" />
+    <ClInclude Include="clsClient.h" />
     <ClInclude Include="clsClientsListScreen.h" />
     <ClInclude Include="clsCurrencyExchangeMenuScreen.h" />
     <ClInclude Include="clsDate.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="clsTransactionsMenuScreen.h" />
     <ClInclude Include="clsUpdateClientScreen.h" />
     <ClInclude Include="clsUtil.h" />
+    <ClInclude Include="Global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
