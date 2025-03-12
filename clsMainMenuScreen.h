@@ -21,9 +21,10 @@ private:
 
 	static void _GoBackToMainMenu()
 	{
+		cout <<"\n"<< setw(35) << "" << "\n\npress any key to go back to main manu..";
 		system("pause>0");
-		cout <<"\n"<< setw(35) << "" << "press any key to go back to main manu..";
 		ShowMainMenuScreen();
+	
 	}
 
 	static  void _PerformMainMenuOption(enMainMenuOption MainMenuOption)
