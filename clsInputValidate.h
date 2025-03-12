@@ -115,5 +115,13 @@ public:
 		return	clsDate::IsValidDate(Date);
 	}
 
+	static string ReadString(string Message = "")
+	{
+		cout << Message;
+		string S1;
+		getline(cin >> ws, S1);
+		return S1;
+	}
+
 };
 
