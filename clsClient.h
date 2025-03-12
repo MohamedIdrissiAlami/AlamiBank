@@ -8,6 +8,7 @@ class clsClient:public clsPerson
 private:
 	string _AccountNumber, _PinCode;
 	float _AccountBalance;
+	bool _MarkedForDelete = false;
 
 		static clsClient _ConvertRecordToClientObject(string Line)
 	{
@@ -36,6 +37,35 @@ private:
 		return vClients;
 	}
 
+	static string _ConvertClientObjectToRecord(clsClient Client)
+	{
+		string ClientRecord = "";
+		ClientRecord += Client.FirstName + Separator;
+		ClientRecord += Client.LastName + Separator;
+		ClientRecord += Client.Email + Separator;
+		ClientRecord += Client.Phone + Separator;
+		ClientRecord += Client.AccountNumber + Separator;
+		ClientRecord += Client.PinCode + Separator;
+		ClientRecord += to_string(Client.AccountBalance);
+		return ClientRecord;
+	}
+
+	static void _SaveUpdatedDataToClientsFile(vector<clsClient>vClients)
+	{
+		fstream MyFile;
+		MyFile.open(ClientsFileName, ios::out);//open file in overwrite mode
+		if (MyFile.is_open())
+		{
+			for (clsClient& Client : vClients)
+			{
+				if (!Client._MarkedForDelete)
+				{
+					MyFile << _ConvertClientObjectToRecord(Client) << endl;
+				}
+			}
+			MyFile.close();
+		}
+	}
 
 public:
 	clsClient(string FirstName, string LastName, string Email, string Phone, string AccountNumber,string PinCode, float AccountBalance) :
@@ -122,6 +152,20 @@ public:
 	static vector<clsClient> GetAllAvailableClients()
 	{
 		return _LoadClientsDataFromFileToVector();
+	}
+
+	static void DeleteClientByAccountNumber(string AccountNumber)
+	{
+		vector<clsClient>vClients = _LoadClientsDataFromFileToVector();
+		for (clsClient& Client : vClients)
+		{
+			if (Client.AccountNumber == AccountNumber)
+			{
+				Client._MarkedForDelete = true;
+				_SaveUpdatedDataToClientsFile(vClients);
+				break;
+			}
+		}
 	}
 
 
