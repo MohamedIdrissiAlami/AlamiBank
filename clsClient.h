@@ -9,16 +9,32 @@ private:
 	string _AccountNumber, _PinCode;
 	float _AccountBalance;
 
-	static clsClient _ConvertRecordToClientObject(string Line)
+		static clsClient _ConvertRecordToClientObject(string Line)
 	{
 		vector<string>vClient = clsString::Split(Line, Separator);
-		return clsClient(vClient[0], vClient[1], vClient[2], vClient[3], vClient[4], vClient[5], stof(vClient[6]));
+		return clsClient(vClient[0],vClient[1],vClient[2],vClient[3],vClient[4],vClient[5],stof(vClient[6]));
 	}
 	static clsClient GetEmptyClientObject()
 	{
 		return clsClient("", "", "", "", "", "", 0);
 	}
 
+	static vector<clsClient> _LoadClientsDataFromFileToVector()
+	{
+		vector<clsClient>vClients;
+		fstream MyFile;
+		MyFile.open(ClientsFileName, ios::in);//open file in read mode
+		if (MyFile.is_open())
+		{
+			string Line = "";
+			while (getline(MyFile, Line))
+			{
+				vClients.push_back(_ConvertRecordToClientObject(Line));
+			}
+			MyFile.close();
+		}
+		return vClients;
+	}
 
 
 public:
@@ -101,6 +117,11 @@ public:
 		}
 		return Client;
 
+	}
+
+	static vector<clsClient> GetAllAvailableClients()
+	{
+		return _LoadClientsDataFromFileToVector();
 	}
 
 
