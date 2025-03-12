@@ -140,12 +140,12 @@ public:
 	{
 		return IsEmptyClientObjet(*this);
 	}
-	static bool IsClientExist(clsClient Client)
+	static bool IsClientExist(string AccountNumber)
 	{
 		vector<clsClient>vClients = _LoadClientsDataFromFileToVector();
 		for (clsClient& C : vClients)
 		{
-			if (C.AccountNumber == Client.AccountNumber)
+			if (C.AccountNumber == AccountNumber)
 				return true;
 		}
 		// if you reached here this means that the client you're looking for is already exist
@@ -153,7 +153,7 @@ public:
 	}
 	bool IsClientExist()
 	{
-		return IsClientExist(*this);
+		return IsClientExist(this->AccountNumber);
 	}
 
 
