@@ -20,7 +20,7 @@ public:
 	{
 		//cout << "\nDelete client screen will be here...";
 		DrawScreenHeader("D E L E T E  C L I E N T ", "SCREEN");
-		static string AccountNumber = clsInputValidate::ReadString("\n\nProvide Account Number ..");
+		string AccountNumber = clsInputValidate::ReadString("\n\nProvide Account Number ..");
 
 		clsClient Client = clsClient::Find(AccountNumber);
 		if (!Client.IsEmptyClientObjet())
@@ -29,7 +29,7 @@ public:
 			if (tolower(clsInputValidate::ReadChar("\nyou are going to delete this Client!Are You Sure ? [Y/N]..")) == 'y')
 			{
 				Client.Delete();
-				if (!Client.IsEmptyClientObjet())
+				if (Client.IsEmptyClientObjet())
 				{
 					cout << "\nthe client with accountnumber [" << AccountNumber << "] was deleted successfully!";
 				}

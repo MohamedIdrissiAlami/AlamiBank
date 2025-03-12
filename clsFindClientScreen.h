@@ -19,7 +19,7 @@ public:
 	{
 		//cout << "\nFind Client Screen will be here..";
 		DrawScreenHeader("F I N D  C L I E N T ", "SCREEN");
-		static string AccountNumber= clsInputValidate::ReadString("\n\nProvide Account Number ..");
+		string AccountNumber= clsInputValidate::ReadString("\n\nProvide Account Number ..");
 
 		clsClient Client = clsClient::Find(AccountNumber);
 		if (!Client.IsEmptyClientObjet())
