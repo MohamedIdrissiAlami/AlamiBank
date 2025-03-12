@@ -6,6 +6,8 @@
 class clsClient:public clsPerson
 {
 private:
+	enum enObjectMode{eEmpty,eUpdated,eAddNewMode};
+	enObjectMode _ObjectMode;
 	string _AccountNumber, _PinCode;
 	float _AccountBalance;
 	bool _MarkedForDelete = false;
@@ -13,11 +15,11 @@ private:
 		static clsClient _ConvertRecordToClientObject(string Line)
 	{
 		vector<string>vClient = clsString::Split(Line, Separator);
-		return clsClient(vClient[0],vClient[1],vClient[2],vClient[3],vClient[4],vClient[5],stof(vClient[6]));
+		return clsClient(enObjectMode::eUpdated,vClient[0],vClient[1],vClient[2],vClient[3],vClient[4],vClient[5],stof(vClient[6]));
 	}
 	static clsClient GetEmptyClientObject()
 	{
-		return clsClient("", "", "", "", "", "", 0);
+		return clsClient(enObjectMode::eEmpty,"", "", "", "", "", "", 0);
 	}
 
 	static vector<clsClient> _LoadClientsDataFromFileToVector()
@@ -67,10 +69,25 @@ private:
 		}
 	}
 
+	void _Update()
+	{
+		vector<clsClient>vClients = _LoadClientsDataFromFileToVector();
+		for (clsClient& Client : vClients)
+		{
+			if (Client.AccountNumber == this->AccountNumber)
+			{
+				Client = *this;
+				break;
+			}
+		}
+		_SaveUpdatedDataToClientsFile(vClients);
+	}
+
 public:
-	clsClient(string FirstName, string LastName, string Email, string Phone, string AccountNumber,string PinCode, float AccountBalance) :
+	clsClient(enObjectMode ObjectMode,string FirstName, string LastName, string Email, string Phone, string AccountNumber,string PinCode, float AccountBalance) :
 		clsPerson(FirstName, LastName, Email, Phone)
 	{
+		_ObjectMode = ObjectMode;
 		_AccountNumber = AccountNumber;
 		_PinCode = PinCode;
 		_AccountBalance = AccountBalance;
@@ -103,6 +120,15 @@ public:
 	__declspec(property(get = GetAccountNumber, put = SetAccountNumber)) string AccountNumber;
 	__declspec(property(get = GetPinCode, put = SetPinCode)) string PinCode;
 	__declspec(property(get = GetAccountBalance, put = SetAccountBalance)) float AccountBalance;
+
+	static bool IsEmptyClientObjet(clsClient Client)
+	{
+		return Client._ObjectMode == enObjectMode::eEmpty;
+	}
+	bool IsEmptyClientObjet()
+	{
+		return IsEmptyClientObjet(*this);
+	}
 
 	static clsClient Find(string AccountNumber, string PinCode)
 	{
@@ -154,7 +180,7 @@ public:
 		return _LoadClientsDataFromFileToVector();
 	}
 
-	static void DeleteClientByAccountNumber(string AccountNumber)
+	void DeleteClientByAccountNumber()
 	{
 		vector<clsClient>vClients = _LoadClientsDataFromFileToVector();
 		for (clsClient& Client : vClients)
@@ -166,8 +192,28 @@ public:
 				break;
 			}
 		}
+		*this = GetEmptyClientObject();
 	}
 
+	enum enSaveResult{eFailedEmptyObject,eSucceded,eClientExists};
+	enSaveResult Save()
+	{
+		switch (_ObjectMode)
+		{
+		case clsClient::eEmpty:
+			return enSaveResult::eFailedEmptyObject;
+		case clsClient::eUpdated:
+			if (!IsEmptyClientObjet())
+			{
+				_Update();
+				return enSaveResult::eSucceded;
+			}
+		case clsClient::eAddNewMode:
+			break;
+		default:
+			break;
+		}
+	}
 
 
 };
