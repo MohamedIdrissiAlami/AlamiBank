@@ -208,7 +208,7 @@ public:
 		return _LoadClientsDataFromFileToVector();
 	}
 
-	void DeleteClientByAccountNumber()
+	void Delete()
 	{
 		vector<clsClient>vClients = _LoadClientsDataFromFileToVector();
 		for (clsClient& Client : vClients)
