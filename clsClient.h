@@ -156,7 +156,10 @@ public:
 		return IsClientExist(this->AccountNumber);
 	}
 
-
+	static clsClient GetAddNewClientObject(string AccountNumber)
+	{
+		return clsClient(enObjectMode::eAddNewMode, "", "", "", "", AccountNumber, "", 0);
+	}
 
 	static clsClient Find(string AccountNumber, string PinCode)
 	{
@@ -237,7 +240,7 @@ public:
 				return enSaveResult::eSucceded;
 			}
 		case clsClient::eAddNewMode:
-			if (!IsClientExist())
+			if (IsClientExist())
 				return enSaveResult::eFailedClientExists;
 			else
 			{
