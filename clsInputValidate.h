@@ -122,6 +122,13 @@ public:
 		getline(cin >> ws, S1);
 		return S1;
 	}
-
+	
+	static char ReadChar(string Message = "")
+	{
+		cout << Message;
+		char Ch = ' ';
+		cin >> Ch;
+		return Ch;
+	}
 };
 
