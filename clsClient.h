@@ -12,7 +12,7 @@ private:
 	float _AccountBalance;
 	bool _MarkedForDelete = false;
 
-		static clsClient _ConvertRecordToClientObject(string Line)
+	static clsClient _ConvertRecordToClientObject(string Line)
 	{
 		vector<string>vClient = clsString::Split(Line, Separator);
 		return clsClient(enObjectMode::eUpdated,vClient[0],vClient[1],vClient[2],vClient[3],vClient[4],vClient[5],stof(vClient[6]));
@@ -83,6 +83,17 @@ private:
 		_SaveUpdatedDataToClientsFile(vClients);
 	}
 
+	void _SaveAddedNewClient()
+	{
+		fstream MyFile;
+		MyFile.open(ClientsFileName, ios::out | ios::app);//open file in the append mode
+		if (MyFile.is_open())
+		{
+			MyFile << _ConvertClientObjectToRecord(*this) << endl;
+			MyFile.close();
+		}
+	}
+
 public:
 	clsClient(enObjectMode ObjectMode,string FirstName, string LastName, string Email, string Phone, string AccountNumber,string PinCode, float AccountBalance) :
 		clsPerson(FirstName, LastName, Email, Phone)
@@ -129,6 +140,23 @@ public:
 	{
 		return IsEmptyClientObjet(*this);
 	}
+	static bool IsClientExist(clsClient Client)
+	{
+		vector<clsClient>vClients = _LoadClientsDataFromFileToVector();
+		for (clsClient& C : vClients)
+		{
+			if (C.AccountNumber == Client.AccountNumber)
+				return true;
+		}
+		// if you reached here this means that the client you're looking for is already exist
+		return false;
+	}
+	bool IsClientExist()
+	{
+		return IsClientExist(*this);
+	}
+
+
 
 	static clsClient Find(string AccountNumber, string PinCode)
 	{
@@ -195,7 +223,7 @@ public:
 		*this = GetEmptyClientObject();
 	}
 
-	enum enSaveResult{eFailedEmptyObject,eSucceded,eClientExists};
+	enum enSaveResult{eFailedEmptyObject,eSucceded,eFailedClientExists};
 	enSaveResult Save()
 	{
 		switch (_ObjectMode)
@@ -209,6 +237,14 @@ public:
 				return enSaveResult::eSucceded;
 			}
 		case clsClient::eAddNewMode:
+			if (!IsClientExist())
+				return enSaveResult::eFailedClientExists;
+			else
+			{
+				this->_ObjectMode = enObjectMode::eUpdated;
+				_SaveAddedNewClient();
+				return enSaveResult::eSucceded;
+			}
 			break;
 		default:
 			break;
