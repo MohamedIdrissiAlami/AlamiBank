@@ -139,6 +139,7 @@
     <ClInclude Include="clsInputValidate.h" />
     <ClInclude Include="clsMainMenuScreen.h" />
     <ClInclude Include="clsManageUsersMenuScreen.h" />
+    <ClInclude Include="clsPerson.h" />
     <ClInclude Include="clsScreen.h" />
     <ClInclude Include="clsString.h" />
     <ClInclude Include="clsTransactionsMenuScreen.h" />
