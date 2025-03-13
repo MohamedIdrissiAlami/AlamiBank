@@ -226,6 +226,12 @@ public:
 		*this = GetEmptyClientObject();
 	}
 
+	bool Deposit(float DepositAmount)
+	{
+		this->AccountBalance += DepositAmount;
+		return this->Save()==enSaveResult::eSucceded;
+	}
+
 	enum enSaveResult{eFailedEmptyObject,eSucceded,eFailedClientExists};
 	enSaveResult Save()
 	{
