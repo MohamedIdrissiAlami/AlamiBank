@@ -231,6 +231,10 @@ public:
 		this->AccountBalance += DepositAmount;
 		return this->Save()==enSaveResult::eSucceded;
 	}
+	bool Withdraw(float WithdrawAmount)
+	{
+		return (WithdrawAmount <= this->AccountBalance)? Deposit(WithdrawAmount * (-1)):false;
+	}
 
 	enum enSaveResult{eFailedEmptyObject,eSucceded,eFailedClientExists};
 	enSaveResult Save()
