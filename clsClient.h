@@ -180,8 +180,7 @@ public:
 			//if you reached here this means the client you're looking for was not found!
 			MyFile.close();
 		}
-		return Client;
-
+		return GetEmptyClientObject();
 	}
 	static clsClient Find(string AccountNumber)
 	{
@@ -202,7 +201,7 @@ public:
 			//if you reached here this means the client you're looking for was not found!
 			MyFile.close();
 		}
-		return Client;
+		return GetEmptyClientObject();
 
 	}
 
@@ -234,6 +233,10 @@ public:
 	bool Withdraw(float WithdrawAmount)
 	{
 		return (WithdrawAmount <= this->AccountBalance)? Deposit(WithdrawAmount * (-1)):false;
+	}
+	bool Transfert(clsClient DestinationClient, float TransfertAmount)
+	{
+		return TransfertAmount <= this->AccountBalance ? (this->Withdraw(TransfertAmount)&&DestinationClient.Deposit(TransfertAmount)) : false;
 	}
 
 	enum enSaveResult{eFailedEmptyObject,eSucceded,eFailedClientExists};
