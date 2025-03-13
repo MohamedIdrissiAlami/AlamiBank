@@ -9,37 +9,10 @@ class clsInputValidate
 
 public:
 
-	static bool IsNumberBetween(short Number, short From, short To)
+	template <typename T>
+	static bool IsNumberBetween(T Number, T From, T To)
 	{
-		if (Number >= From && Number <= To)
-			return true;
-		else
-			return false;
-	}
-
-	static bool IsNumberBetween(int Number, int From, int To)
-	{
-		if (Number >= From && Number <= To)
-			return true;
-		else
-			return false;
-
-	}
-
-	static bool IsNumberBetween(float Number, float From, float To)
-	{
-		if (Number >= From && Number <= To)
-			return true;
-		else
-			return false;
-	}
-
-	static bool IsNumberBetween(double Number, double From, double To)
-	{
-		if (Number >= From && Number <= To)
-			return true;
-		else
-			return false;
+		return (Number >= From && Number <= To);
 	}
 
 	static bool IsDateBetween(clsDate Date, clsDate From, clsDate To)
@@ -65,9 +38,11 @@ public:
 		return false;
 	}
 
-	static int ReadIntNumber(string ErrorMessage = "Invalid Number, Enter again\n")
+	template <typename T>
+	static T ReadNumber(string Message="", string ErrorMessage = "Invalid Number, Enter again\n")
 	{
-		int Number;
+		T Number=0;
+		cout << Message;
 		while (!(cin >> Number)) {
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -76,37 +51,27 @@ public:
 		return Number;
 	}
 
-	static int ReadIntNumberBetween(int From, int To, string ErrorMessage = "Number is not within range, Enter again:\n")
+	template <typename T>
+	static T ReadNumberBetween(T From, T To,string Message="", string ErrorMessage = "Number is not within range, Enter again:\n")
 	{
-		int Number = ReadIntNumber();
-
-		while (!IsNumberBetween(Number, From, To))
+		int Number = 0;
+		do
 		{
-			cout << ErrorMessage;
-			Number = ReadIntNumber();
-		}
+			if (!IsNumberBetween<T>((Number= ReadNumber<T>(Message)), From, To))
+				cout << ErrorMessage;
+		} while (!IsNumberBetween<T>(Number, From, To));
 		return Number;
 	}
 
-	static double ReadDblNumber(string ErrorMessage = "Invalid Number, Enter again\n")
+	template <typename T>
+	static T ReadPositiveNumber(string Message = "")
 	{
-		double Number;
-		while (!(cin >> Number)) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << ErrorMessage;
-		}
-		return Number;
-	}
-
-	static double ReadDblNumberBetween(double From, double To, string ErrorMessage = "Number is not within range, Enter again:\n")
-	{
-		double Number = ReadDblNumber();
-
-		while (!IsNumberBetween(Number, From, To)) {
-			cout << ErrorMessage;
-			Number = ReadDblNumber();
-		}
+		T Number = 0;
+		do
+		{
+			if ((Number = ReadNumber<T>(Message)) < 0)
+				cout << "\nTry again with a positive number..";
+		} while (Number<0);
 		return Number;
 	}
 

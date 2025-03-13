@@ -11,8 +11,7 @@ private:
 	enum enManageUsersMenuOption{eShowUsersList=1,eAddNewUsers,eDeleteUsers,eUpdateUsers,eFindUsers,eExit};
 	static int _ReadManageUsersMenuOption()
 	{
-		cout << "\nChoose what do you wanna do [1~6] ";
-		return clsInputValidate::ReadIntNumberBetween(1, 6);
+		return clsInputValidate::ReadNumberBetween<short>(1, 6,"\nChoose what do you wanna do [1~6] ");
 	}
 
 	static void _GoBackToManageUsersMenuScreen()

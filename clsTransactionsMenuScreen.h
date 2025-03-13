@@ -10,8 +10,7 @@ private :
 	enum enTransactionsMenuOption{eDepost=1,eWithdraw,eTransfert,eTotalBalances};
 	static int _ReadTransactioinsMenuOption()
 	{
-		cout << "\nMake an option [1~5]..";
-		return clsInputValidate::ReadIntNumberBetween(1, 5);
+		return clsInputValidate::ReadNumberBetween(1, 5,"\nMake an option [1~5]..");
 	}
 
 	static void GoBackToTransactionsMenuScreen()
