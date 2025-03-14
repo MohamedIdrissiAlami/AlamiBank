@@ -32,7 +32,7 @@ private:
 			break;
 		case clsManageUsersMenuScreen::eAddNewUsers:
 			system("cls");
-			clsAddNewUserScreen::ShowAddNewUsersScreen();
+			clsAddNewUserScreen::ShowAddNewUserScreen();
 			_GoBackToManageUsersMenuScreen();
 			break;
 		case clsManageUsersMenuScreen::eDeleteUsers:

@@ -104,6 +104,11 @@ public:
 		_Permissions = Permissions;
 	}
 
+	enum enPermissions {
+		pAll = -1, pNothing = 0, pShowClientsList = 1, pAddNewClients = 2, pDeleteClient = 4, pUpdateClient = 8, pFindClient = 16, pTransactions = 32,
+		pManageUsesrs = 64, pLoginRegister = 128, pUpdateCurrencyRate = 256
+	};
+
 	void SetUserName(string UserName)
 	{
 		_UserName = UserName;
