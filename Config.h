@@ -3,3 +3,4 @@
 std::string Separator = "#//#";
 std::string UsersFileName = "Users.txt";
 std::string ClientsFileName = "Clients.txt";
+short EncryptionKey = 7;

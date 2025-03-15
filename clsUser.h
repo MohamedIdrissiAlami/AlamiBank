@@ -3,6 +3,7 @@
 #include "clsString.h"
 #include <fstream>
 #include "Config.h"
+#include "clsUtil.h"
 class clsUser:public clsPerson
 {
 private:
@@ -15,7 +16,7 @@ private:
 	static clsUser _ConvertRecordToUserObject(string Line)
 	{
 		vector<string>vUser = clsString::Split(Line, Separator);
-		return clsUser(enObjectMode::eUpdated, vUser[0], vUser[1], vUser[2], vUser[3], vUser[4], vUser[5], stoi(vUser[6]));
+		return clsUser(enObjectMode::eUpdated, vUser[0], vUser[1], vUser[2], vUser[3], vUser[4], clsUtil::DecryptText(vUser[5],EncryptionKey), stoi(vUser[6]));
 	}
 	static clsUser GetEmptyUserObject()
 	{
@@ -47,7 +48,7 @@ private:
 		UserRecord += User.Email + Separator;
 		UserRecord += User.Phone + Separator;
 		UserRecord += User.UserName + Separator;
-		UserRecord += User.Password + Separator;
+		UserRecord += clsUtil::EncryptText(User.Password,EncryptionKey) + Separator;
 		UserRecord += to_string(User.Permissions);
 		return UserRecord;
 	}
