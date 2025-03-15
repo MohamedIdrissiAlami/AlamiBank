@@ -50,6 +50,9 @@ private :
 public :
 	static void ShowTransactionsMenuScreen()
 	{
+		if (!clsScreen::CheckAccessRights(clsUser::enPermissions::pTransactions))
+			return;
+
 		system("cls");
 		//cout << "\nTransactions menu screen will be here .. ";
 		clsScreen::DrawScreenHeader("T R A N S A C T I O N S   M E N U", "SCREEN");

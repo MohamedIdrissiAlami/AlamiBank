@@ -17,6 +17,9 @@ private:
 public:
 	static void ShowFindClientScreen()
 	{
+		if (!clsScreen::CheckAccessRights(clsUser::enPermissions::pFindClient))
+			return;
+
 		//cout << "\nFind Client Screen will be here..";
 		DrawScreenHeader("F I N D  C L I E N T ", "SCREEN");
 		string AccountNumber= clsInputValidate::ReadString("\n\nProvide Account Number ..");

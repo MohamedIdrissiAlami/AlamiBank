@@ -60,6 +60,9 @@ private:
 public:
 	static void ShowManageUsersMenuScreen()
 	{
+		if (!clsScreen::CheckAccessRights(clsUser::enPermissions::pManageUsesrs))
+			return;
+
 		//cout << "\nManage users menu screen will be here..";
 		system("cls");
 		clsScreen::DrawScreenHeader("M A N A G E  U S E R S   M E N U", "SCREEN");

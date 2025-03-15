@@ -129,13 +129,13 @@ public:
 	{
 		return _Password;
 	}
-	float GetPermissions()
+	int GetPermissions()
 	{
 		return _Permissions;
 	}
 	__declspec(property(get = GetUserName, put = SetUserName)) string UserName;
 	__declspec(property(get = GetPassword, put = SetPassword)) string Password;
-	__declspec(property(get = GetPermissions, put = SetPermissions)) float Permissions;
+	__declspec(property(get = GetPermissions, put = SetPermissions)) int Permissions;
 
 	static bool IsEmptyUserObjet(clsUser User)
 	{
@@ -259,6 +259,13 @@ public:
 		}
 	}
 
+	bool CheckAccessPermissions(enPermissions Permission)
+	{
+		if (Permissions == enPermissions::pAll)
+			return true;
+		else
+			return (this->Permissions & Permission) == Permission;
+	}
 
 };
 

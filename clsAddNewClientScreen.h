@@ -27,6 +27,9 @@ public:
 public: 
 	static void ShowAddNewClientScreen()
 	{
+		if (!clsScreen::CheckAccessRights(clsUser::enPermissions::pAddNewClients))
+			return;
+
 		//cout << "\n Add new client screen will be here..";
 		DrawScreenHeader("A D D  N E W  C L I E N T ", "SCREEN");
 		string AccountNumber = clsInputValidate::ReadString("\n\nProvide Account Number ..");

@@ -24,6 +24,9 @@ private:
 public:
 	static void ShowUpdateClientScreen()
 	{
+		if (!clsScreen::CheckAccessRights(clsUser::enPermissions::pUpdateClient))
+			return;
+
 		//cout << "\nUpdate Client screen will be here..";
 		DrawScreenHeader("U P D A T E  C L I E N T ", "SCREEN");
 		string AccountNumber = clsInputValidate::ReadString("\n\nProvide Account Number ..");
