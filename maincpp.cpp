@@ -1,7 +1,7 @@
-#include "clsMainMenuScreen.h"
-
+#include "clsLoginScreen.h"
 int main()
 {
-	clsMainMenuScreen::ShowMainMenuScreen();
+	clsLoginScreen::ShowLoginScreen();
+	//clsMainMenuScreen::ShowMainMenuScreen();
 	return 0;
 }
