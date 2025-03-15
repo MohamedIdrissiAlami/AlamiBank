@@ -2,7 +2,7 @@
 #include "clsPerson.h"
 #include "clsString.h"
 #include <fstream>
-#include "Global.h"
+#include "Config.h"
 class clsClient:public clsPerson
 {
 private:
